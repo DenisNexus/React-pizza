@@ -1,6 +1,10 @@
-import React from 'react'
+import React,{useState} from 'react'
 
 export default function Sort() {
+  const arr = ["популярности","цене","алфавиту"]
+  const [open, setOpen] = useState(false);
+  const [activeSort,setActiveSort]= useState(0);
+
   return (
     <div className="sort">
     <div className="sort__label">
@@ -17,15 +21,15 @@ export default function Sort() {
         />
       </svg>
       <b>Сортировка по:</b>
-      <span>популярности</span>
+      <span onClick={()=>setOpen(!open)}>{arr[activeSort]}</span>
     </div>
-    <div className="sort__popup">
+    {open && <div className="sort__popup">
       <ul>
-        <li className="active">популярности</li>
-        <li>цене</li>
-        <li>алфавиту</li>
+        {arr.map((name,i)=>
+          <li onClick={()=>setActiveSort(i)} className={activeSort === i ? "active" : "" }>{name}</li>
+        )}
       </ul>
-    </div>
+    </div>}
   </div>
 
   )
