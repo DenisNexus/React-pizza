@@ -26,6 +26,20 @@
         background-color: #282828;
         color: #fff;
       }
+
+      @media (max-width: 390px) {
+        padding: 8px 20px;
+      }
     }
   }
+
+  @media (max-width: 1260px) {
+      width: 100%;
+      overflow: scroll;
+    }
+    .sort__label{
+      b{
+        display: none;
+      }
+    }
 }

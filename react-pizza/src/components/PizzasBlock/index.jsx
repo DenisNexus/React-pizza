@@ -1,6 +1,6 @@
 import React,{useState} from "react"
 
-export default function PizzaBlock({title,price,imageUrl,sizes,types}) {
+export default function PizzaBlock({name,price,imageUrl,sizes,types}) {
 const [activeTypes , setActiveTypes] = useState(0);
 const [activeSizes , setActiveSizes] = useState(0);
 
@@ -12,7 +12,7 @@ const typesPizza = ["тонкое","традиционное"]
         src={imageUrl}
         alt="Pizza"
       />
-      <h4 className="pizza-block__title">{title}</h4>
+      <h4 className="pizza-block__title">{name}</h4>
       <div className="pizza-block__selector">
         <ul>
         {types.map((value)=>

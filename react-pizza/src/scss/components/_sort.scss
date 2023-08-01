@@ -18,6 +18,19 @@
       color: $orange;
       border-bottom: 1px dashed $orange;
       cursor: pointer;
+      
+    }
+
+    @media (max-width: 800px) {
+      span{
+        margin-bottom: 30px;
+      }
+    }
+
+    @media (max-width: 800px) {
+      b{
+        display: none;
+      }
     }
   }
 
