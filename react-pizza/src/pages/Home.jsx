@@ -9,6 +9,9 @@ import Skeleton from '../components/PizzasBlock/Skeleton';
 export default function Home() {
     const[items, setItems]=useState([]);
     const[loading,isLoading]=useState(true);
+    const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(null);
+
+    
   
     useEffect (()=>{
       async function fetchData(){
@@ -22,16 +25,20 @@ export default function Home() {
   return (
     <>
     <div className="content__top">
-        <Catigories/>
+        <Catigories
+          addes = {(index)=>{setSelectedCategoryIndex(index)}}
+        />
         <Sort/>
     </div>
     <h2 className="content__title">Все пиццы</h2>
     <div className='content__wrapper'>
     <div className="content__items">
+      {console.log(selectedCategoryIndex)}
         {
         loading ?
         [...Array(8).keys()].map((_,index)=> <Skeleton key={index}/>) 
-        :items.map((obj)=><PizzaBlock key={obj.id}{...obj}
+        :items.filter((obj) => selectedCategoryIndex === null || obj.category === selectedCategoryIndex)
+        .map((obj)=><PizzaBlock key={obj.id}{...obj}
         /> 
         )}
     </div>
