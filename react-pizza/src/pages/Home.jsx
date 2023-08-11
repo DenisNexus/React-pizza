@@ -1,32 +1,41 @@
-import React,{useEffect,useState}  from 'react'
+import React,{useEffect,useState,useContext}  from 'react'
 import Catigories from '../components/Catigories';
 import Sort from '../components/Sort';
 import PizzaBlock from '../components/PizzasBlock';
 import axios from 'axios';
 import Skeleton from '../components/PizzasBlock/Skeleton';
+import AppContext from '../components/Context';
 
 
 export default function Home() {
-    const[items, setItems]=useState([]);
-    const[loading,isLoading]=useState(true);
+    const {inputValue} = useContext(AppContext)
+    const [items, setItems]=useState([]);
+    const [loading,isLoading]=useState(true);
     const [categoryId , setCategoryId] = useState(0);
     const [sortType,setsortType]= useState({
       name:"популярности",
       sortProperty:'rating'
     });
+    
 
-  
     useEffect (()=>{
       async function fetchData(){
         isLoading(true);
-        const respons = await axios.get(`https://64c6862d0a25021fde91bafc.mockapi.io/pizzas?${categoryId>0 ? `category=${categoryId}`:" "}&sortBy=${sortType.sortProperty}`);
+
+        const category = categoryId>0 ? `category=${categoryId}`:" "
+
+        const respons = await axios.get(`https://64c6862d0a25021fde91bafc.mockapi.io/pizzas?${category}&sortBy=${sortType.sortProperty}`);
         setItems(respons.data)
         isLoading(false);
       }
       fetchData()
       window.scrollTo(0,0)
     },[categoryId ,sortType])
-    console.log(sortType)
+
+    let filterPizzas = items.filter(i=>i.name.toLocaleLowerCase().includes(inputValue))
+    let skeleton = [...Array(8).keys()].map((_,index)=> <Skeleton key={index}/>);
+    let pizzas = filterPizzas.map((obj)=><PizzaBlock key={obj.id}{...obj}/>);
+    
   return (
     <>
     <div className="content__top">
@@ -44,10 +53,8 @@ export default function Home() {
     <div className="content__items">
         {
         loading ?
-        [...Array(8).keys()].map((_,index)=> <Skeleton key={index}/>) 
-        :items.map((obj)=><PizzaBlock key={obj.id}{...obj}
-        /> 
-        )}
+        skeleton
+        :pizzas}
     </div>
     </div>
     </>
