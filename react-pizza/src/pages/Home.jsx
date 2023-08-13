@@ -5,11 +5,13 @@ import PizzaBlock from '../components/PizzasBlock';
 import axios from 'axios';
 import Skeleton from '../components/PizzasBlock/Skeleton';
 import AppContext from '../components/Context';
+import Pagination from '../components/Pagination';
 
 
 export default function Home() {
     const {inputValue} = useContext(AppContext)
     const [items, setItems]=useState([]);
+    const [page,setPage]=useState(1);
     const [loading,isLoading]=useState(true);
     const [categoryId , setCategoryId] = useState(0);
     const [sortType,setsortType]= useState({
@@ -24,13 +26,13 @@ export default function Home() {
 
         const category = categoryId>0 ? `category=${categoryId}`:" "
 
-        const respons = await axios.get(`https://64c6862d0a25021fde91bafc.mockapi.io/pizzas?${category}&sortBy=${sortType.sortProperty}`);
+        const respons = await axios.get(`https://64c6862d0a25021fde91bafc.mockapi.io/pizzas?page=${page}&limit=4&${category}&sortBy=${sortType.sortProperty}`);
         setItems(respons.data)
         isLoading(false);
       }
       fetchData()
       window.scrollTo(0,0)
-    },[categoryId ,sortType])
+    },[categoryId ,sortType,page])
 
     let filterPizzas = items.filter(i=>i.name.toLocaleLowerCase().includes(inputValue))
     let skeleton = [...Array(8).keys()].map((_,index)=> <Skeleton key={index}/>);
@@ -56,6 +58,7 @@ export default function Home() {
         skeleton
         :pizzas}
     </div>
+    <Pagination onChangepage={setPage}/>
     </div>
     </>
   )
