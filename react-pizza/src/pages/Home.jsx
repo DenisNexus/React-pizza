@@ -7,18 +7,26 @@ import Skeleton from '../components/PizzasBlock/Skeleton';
 import AppContext from '../components/Context';
 import Pagination from '../components/Pagination';
 
+import { useSelector, useDispatch } from 'react-redux'
+import { setCategoryId,setsortType } from '../redux/slices/filterSlice'
 
-export default function Home() {
+
+function Home() {
+    const {sortType ,categoryId} = useSelector(state=>state.filterSlice)
+    const dispatch = useDispatch()
+
     const {inputValue} = useContext(AppContext)
     const [items, setItems]=useState([]);
     const [page,setPage]=useState(1);
     const [loading,isLoading]=useState(true);
-    const [categoryId , setCategoryId] = useState(0);
-    const [sortType,setsortType]= useState({
-      name:"популярности",
-      sortProperty:'rating'
-    });
-    
+        
+    const categoryChange = (id)=>{
+      dispatch(setCategoryId(id))
+    }
+
+    const filteChange = (id)=>{
+      dispatch(setsortType(id))
+    }
 
     useEffect (()=>{
       async function fetchData(){
@@ -43,11 +51,11 @@ export default function Home() {
     <div className="content__top">
         <Catigories
           value={categoryId}
-          onClickCategory={(id)=> setCategoryId(id)}
+          onClickCategory={(id)=> categoryChange(id)}
         />
         <Sort
           value={sortType}
-          onChangeSort={(id)=> setsortType(id)}
+          onChangeSort={(id)=> filteChange(id)}
         />
     </div>
     <h2 className="content__title">Все пиццы</h2>
@@ -63,3 +71,5 @@ export default function Home() {
     </>
   )
 }
+
+export default Home;
