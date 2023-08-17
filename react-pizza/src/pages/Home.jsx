@@ -1,23 +1,28 @@
-import React,{useEffect,useState,useContext}  from 'react'
-import Catigories from '../components/Catigories';
-import Sort from '../components/Sort';
-import PizzaBlock from '../components/PizzasBlock';
+import React,{useEffect,useState,useContext , useRef}  from 'react'
 import axios from 'axios';
+import qs from "qs";
+import {useNavigate} from 'react-router-dom'
+
+import Catigories from '../components/Catigories';
+import Sort, { arr } from '../components/Sort';
+import PizzaBlock from '../components/PizzasBlock';
 import Skeleton from '../components/PizzasBlock/Skeleton';
 import AppContext from '../components/Context';
 import Pagination from '../components/Pagination';
 
 import { useSelector, useDispatch } from 'react-redux'
-import { setCategoryId,setsortType } from '../redux/slices/filterSlice'
+import { setCategoryId,setsortType,setPage,setFiltres } from '../redux/slices/filterSlice'
 
 
 function Home() {
-    const {sortType ,categoryId} = useSelector(state=>state.filterSlice)
+    const navigate = useNavigate();
+    const {sortType,categoryId,page} = useSelector(state=>state.filterSlice)
     const dispatch = useDispatch()
+    const isSearch = useRef(false);
+    const isMounted = useRef(false);
 
     const {inputValue} = useContext(AppContext)
     const [items, setItems]=useState([]);
-    const [page,setPage]=useState(1);
     const [loading,isLoading]=useState(true);
         
     const categoryChange = (id)=>{
@@ -28,7 +33,11 @@ function Home() {
       dispatch(setsortType(id))
     }
 
-    useEffect (()=>{
+    const onChangepage = (id)=>{
+      dispatch(setPage(id))
+    }
+
+    const fetchPizzas =()=>{
       async function fetchData(){
         isLoading(true);
 
@@ -40,13 +49,42 @@ function Home() {
       }
       fetchData()
       window.scrollTo(0,0)
+    }
+    useEffect(()=>{
+      if(window.location.search){
+        const params = qs.parse(window.location.search.substring(1))
+        const sort =  arr.find(obj=>obj.sortProperty === params.sortProperty)
+        dispatch (
+          setFiltres({
+            ...params,
+            sort
+          })
+        )
+        isSearch.current = true
+      }
+    },[dispatch])
+
+    useEffect (()=>{
+      if(isSearch.current){
+        fetchPizzas();
+      }
+      isSearch.current = false
     },[categoryId ,sortType,page])
 
     let filterPizzas = items.filter(i=>i.name.toLocaleLowerCase().includes(inputValue))
     let skeleton = [...Array(8).keys()].map((_,index)=> <Skeleton key={index}/>);
     let pizzas = filterPizzas.map((obj)=><PizzaBlock key={obj.id}{...obj}/>);
     
-  return (
+    useEffect(()=>{
+      const queryString = qs.stringify({
+        sortProperty:sortType.sortProperty,
+        categoryId,
+        page,
+      })
+      navigate(`?${queryString}`)
+    },[categoryId ,page ,sortType.sortProperty])
+
+    return (
     <>
     <div className="content__top">
         <Catigories
@@ -66,7 +104,7 @@ function Home() {
         skeleton
         :pizzas}
     </div>
-    <Pagination onChangepage={setPage}/>
+    <Pagination onChangepage={(id)=>onChangepage(id)}/>
     </div>
     </>
   )
