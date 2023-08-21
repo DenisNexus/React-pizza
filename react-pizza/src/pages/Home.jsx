@@ -37,19 +37,33 @@ function Home() {
       dispatch(setPage(id))
     }
 
-    const fetchPizzas =()=>{
-      async function fetchData(){
-        isLoading(true);
+    const fetchPizzas = () =>{
 
+        isLoading(true);
         const category = categoryId>0 ? `category=${categoryId}`:" "
 
-        const respons = await axios.get(`https://64c6862d0a25021fde91bafc.mockapi.io/pizzas?page=${page}&limit=4&${category}&sortBy=${sortType.sortProperty}`);
-        setItems(respons.data)
-        isLoading(false);
+        axios.get(
+          `https://64c6862d0a25021fde91bafc.mockapi.io/pizzas?page=${page}&limit=4&${category}&sortBy=${sortType.sortProperty}`
+          )
+        .then((respons)=>{
+          setItems(respons.data)
+          isLoading(false);
+        })
+        window.scrollTo(0,0)
       }
-      fetchData()
-      window.scrollTo(0,0)
-    }
+
+      useEffect(()=>{
+        if(isMounted.current){
+          const queryString = qs.stringify({
+            sortProperty:sortType.sortProperty,
+            categoryId,
+            page,
+          })
+          navigate(`?${queryString}`)
+        }
+        isMounted.current=true
+      },[categoryId ,page ,sortType.sortProperty,navigate])
+
     useEffect(()=>{
       if(window.location.search){
         const params = qs.parse(window.location.search.substring(1))
@@ -65,7 +79,7 @@ function Home() {
     },[dispatch])
 
     useEffect (()=>{
-      if(isSearch.current){
+      if(!isSearch.current){
         fetchPizzas();
       }
       isSearch.current = false
@@ -75,15 +89,6 @@ function Home() {
     let skeleton = [...Array(8).keys()].map((_,index)=> <Skeleton key={index}/>);
     let pizzas = filterPizzas.map((obj)=><PizzaBlock key={obj.id}{...obj}/>);
     
-    useEffect(()=>{
-      const queryString = qs.stringify({
-        sortProperty:sortType.sortProperty,
-        categoryId,
-        page,
-      })
-      navigate(`?${queryString}`)
-    },[categoryId ,page ,sortType.sortProperty])
-
     return (
     <>
     <div className="content__top">

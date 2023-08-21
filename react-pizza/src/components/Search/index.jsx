@@ -17,7 +17,7 @@ export default function Search() {
                 onChange={(event)=>setIntutValue(event.target.value)}  
                 placeholder='Введи название пиццы' 
                 />
-                <img onClick={()=>setIntutValue("")} className={styles.close} src="../img/close.svg" alt="close" />
+                {inputValue && <img onClick={()=>setIntutValue("")} className={styles.close} src="../img/close.svg" alt="close" />}
             </div>
         )
 }

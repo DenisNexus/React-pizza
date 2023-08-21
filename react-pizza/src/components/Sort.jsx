@@ -1,13 +1,14 @@
 import React,{useState} from 'react'
+export const arr = [
+  {name:"популярности",
+  sortProperty:"rating"},
+   {name:"цене",
+   sortProperty:"price"},
+   {name:"алфавиту",
+    sortProperty:"name"}]
+
 
 export default function Sort({value,onChangeSort}) {
-  const arr = [
-    {name:"популярности",
-    sortProperty:"rating"},
-     {name:"цене",
-     sortProperty:"price"},
-     {name:"алфавиту",
-      sortProperty:"name"}]
 
   const [open, setOpen] = useState(false);
 
@@ -33,8 +34,8 @@ export default function Sort({value,onChangeSort}) {
     </div>
     {open && <div className="sort__popup">
       <ul>
-        {arr.map((obj)=>
-          <li onClick={()=>onChangeSort(obj)} className={value.sortType === obj.sortProperty ? "active" : "" }>{obj.name}</li>
+        {arr.map((obj,index)=>
+          <li key={index} onClick={()=>onChangeSort(obj)} className={value.sortType === obj.sortProperty ? "active" : "" }>{obj.name}</li>
         )}
       </ul>
     </div>}
