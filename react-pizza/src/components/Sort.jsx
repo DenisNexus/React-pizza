@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState,useRef,useEffect} from 'react'
 export const arr = [
   {name:"популярности",
   sortProperty:"rating"},
@@ -11,11 +11,22 @@ export const arr = [
 export default function Sort({value,onChangeSort}) {
 
   const [open, setOpen] = useState(false);
+  const sortRef = useRef();
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (sortRef.current && !sortRef.current.contains(event.target)) {
+        setOpen(false);
+      }
+    };
   
+    document.addEventListener("click", handleClickOutside);
+  
+    return () => {document.removeEventListener("click", handleClickOutside);};
+  }, []);
 
   return (
-    <div className="sort">
+    <div ref={sortRef} className="sort">
     <div className="sort__label">
       <svg
         width="10"
