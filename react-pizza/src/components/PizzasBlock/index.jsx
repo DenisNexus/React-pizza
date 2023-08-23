@@ -2,25 +2,27 @@ import React,{useState} from "react"
 import {useSelector,useDispatch} from 'react-redux'
 import {addToCart} from "../../redux/slices/cartSlise"
 
-// ./redux/slices/cartSlise
-export default function PizzaBlock({name,price,imageUrl,sizes,types}) {
+
+export default function PizzaBlock({name,price,imageUrl,sizes,types,id}) {
+const cartItem  = useSelector(state=>state.cartSlise.items.find(obj=>obj.id === id))
 const [activeTypes , setActiveTypes] = useState(0);
 const [activeSizes , setActiveSizes] = useState(0);
 const dispatch = useDispatch();
+const typesPizza = ["тонкое","традиционное"];
+
+const addedCount = cartItem? cartItem.count : 0 ;
 
 const onClickAdd =  () =>{
   const item = {
+    id,
     name,
     price,
     imageUrl,
     sizes:activeSizes,
-    types:activeTypes
+    types:typesPizza[activeTypes]
   }
   dispatch(addToCart(item))
 }
-
-
-const typesPizza = ["тонкое","традиционное"]
   return (
     <div className="pizza-block">
       <img
@@ -65,7 +67,7 @@ const typesPizza = ["тонкое","традиционное"]
               />
             </svg>
             <span onClick={onClickAdd}>Добавить</span>
-            <i>2</i>
+            {addedCount >0 && <i>{addedCount}</i>}
   </div>
 </div>
 </div> 
