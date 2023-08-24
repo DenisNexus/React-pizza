@@ -23,7 +23,8 @@ export const cartSlise = createSlice({
       state.totalItemsPrise = state.items.reduce((sum,obj)=>{return sum+obj.price*obj.count},0)
     },
     minusItem(state , actions){
-      const findIndex = state.items.find(obj => obj.id === actions.payload.id)
+      const findIndex = state.items.find(obj => obj.id === actions.payload.id);
+      console.log({findIndex})
       if(findIndex){
         findIndex.count--
       }

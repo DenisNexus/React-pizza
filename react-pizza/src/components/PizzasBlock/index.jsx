@@ -18,7 +18,7 @@ const onClickAdd =  () =>{
     name,
     price,
     imageUrl,
-    sizes:activeSizes,
+    sizes:sizes[activeSizes],
     types:typesPizza[activeTypes]
   }
   dispatch(addToCart(item))

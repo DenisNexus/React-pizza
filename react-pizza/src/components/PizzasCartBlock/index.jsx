@@ -23,7 +23,7 @@ export default function PizzasCartBlock ({name,price,imageUrl,sizes,types,count,
             </div>
             <div className="cart__item-info">
                 <h3>{name}</h3>
-                <p>{types}, {sizes}</p>
+                <p>{types}, {sizes} см</p>
             </div>
         <div className="cart__item-count">
           <div onClick={onClickMinus} className="button button--outline button--circle cart__item-count-minus">

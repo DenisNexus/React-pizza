@@ -1,6 +1,8 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import PizzasCartBlock from '../components/PizzasCartBlock'
+import CartEmpty from '../components/CartEmpty'
+
 import { useSelector, useDispatch } from 'react-redux'
 import {clearCart} from '../redux/slices/cartSlise'
 
@@ -13,8 +15,10 @@ export default function Cart() {
   }
   return (
     <div className="cart">
-            <div className="cart__top">
-              <h2 className="content__title">
+              {items.length>0 ? 
+              <>
+              <div className="cart__top">
+               <h2 className="content__title">
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M6.33333 16.3333C7.06971 16.3333 7.66667 15.7364 7.66667 15C7.66667 14.2636 7.06971 13.6667 6.33333 13.6667C5.59695 13.6667 5 14.2636 5 15C5 15.7364 5.59695 16.3333 6.33333 16.3333Z" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"></path>
                 <path d="M14.3333 16.3333C15.0697 16.3333 15.6667 15.7364 15.6667 15C15.6667 14.2636 15.0697 13.6667 14.3333 13.6667C13.597 13.6667 13 14.2636 13 15C13 15.7364 13.597 16.3333 14.3333 16.3333Z" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"></path>
@@ -33,7 +37,7 @@ export default function Cart() {
               </div>
             </div>
             <div className="content__itemss">
-              {items.map((obj)=><PizzasCartBlock key={obj.key} {...obj}/>)}
+              {items.map((obj)=>obj.count && <PizzasCartBlock key={obj.key} {...obj}/>)}
             </div>
             <div className="cart__bottom">
               <div className="cart__bottom-details">
@@ -52,6 +56,10 @@ export default function Cart() {
                 </div>
               </div>
             </div>
-          </div>
+
+            </> 
+            : <CartEmpty/>
+            }
+            </div>
   )
 }
