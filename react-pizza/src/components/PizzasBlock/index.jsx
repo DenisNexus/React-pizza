@@ -1,10 +1,10 @@
 import React,{useState} from "react"
 import {useSelector,useDispatch} from 'react-redux'
-import {addToCart} from "../../redux/slices/cartSlise"
+import {addToCart} from "../../redux/slices/cartSlice"
 
 
 export default function PizzaBlock({name,price,imageUrl,sizes,types,id}) {
-const cartItem  = useSelector(state=>state.cartSlise.items.find(obj=>obj.id === id))
+const cartItem  = useSelector(state=>state.cartSlice.items.find(obj=>obj.id === id))
 const [activeTypes , setActiveTypes] = useState(0);
 const [activeSizes , setActiveSizes] = useState(0);
 const dispatch = useDispatch();

@@ -1,5 +1,4 @@
 import React,{useEffect,useState,useContext , useRef}  from 'react'
-import axios from 'axios';
 import qs from "qs";
 import {useNavigate} from 'react-router-dom'
 
@@ -12,19 +11,19 @@ import Pagination from '../components/Pagination';
 
 import { useSelector, useDispatch } from 'react-redux'
 import { setCategoryId,setsortType,setPage,setFiltres } from '../redux/slices/filterSlice'
+import {fetchPizzas} from '../redux/slices/pizzasSlice'
 
 
 function Home() {
     const navigate = useNavigate();
-    const {sortType,categoryId,page} = useSelector(state=>state.filterSlice)
+    const {sortType,categoryId,page} = useSelector(state=>state.filterSlice);
+    const {items,status} = useSelector(state=>state.pizzasSlice);
     const dispatch = useDispatch()
     const isSearch = useRef(false);
     const isMounted = useRef(false);
 
     const {inputValue} = useContext(AppContext)
-    const [items, setItems]=useState([]);
-    const [loading,isLoading]=useState(true);
-        
+  
     const categoryChange = (id)=>{
       dispatch(setCategoryId(id))
     }
@@ -37,18 +36,12 @@ function Home() {
       dispatch(setPage(id))
     }
 
-    const fetchPizzas = () =>{
-
-        isLoading(true);
+    const getPizzas = () =>{
         const category = categoryId>0 ? `category=${categoryId}`:" "
-
-        axios.get(
-          `https://64c6862d0a25021fde91bafc.mockapi.io/pizzas?page=${page}&limit=4&${category}&sortBy=${sortType.sortProperty}`
-          )
-        .then((respons)=>{
-          setItems(respons.data)
-          isLoading(false);
-        })
+          dispatch(fetchPizzas({
+            category,
+            page,
+            sortType}))
         window.scrollTo(0,0)
       }
 
@@ -80,7 +73,7 @@ function Home() {
 
     useEffect (()=>{
       if(!isSearch.current){
-        fetchPizzas();
+        getPizzas();
       }
       isSearch.current = false
     },[categoryId ,sortType,page])
@@ -103,12 +96,14 @@ function Home() {
     </div>
     <h2 className="content__title">Все пиццы</h2>
     <div className='content__wrapper'>
-    <div className="content__items">
-        {
-        loading ?
-        skeleton
-        :pizzas}
-    </div>
+    {
+        status ==="error" ?
+          <div className='content__error'>
+          <h2> К сожалению ничего не найдено <span>😕</span ></h2>
+          <p>Поробуйте повоторить запрос позже.</p>
+          </div>
+        :<div className="content__items">{status === "loading" ? skeleton : pizzas}</div>
+      }
     <Pagination onChangepage={(id)=>onChangepage(id)}/>
     </div>
     </>

@@ -4,11 +4,11 @@ import PizzasCartBlock from '../components/PizzasCartBlock'
 import CartEmpty from '../components/CartEmpty'
 
 import { useSelector, useDispatch } from 'react-redux'
-import {clearCart} from '../redux/slices/cartSlise'
+import {clearCart} from '../redux/slices/cartSlice'
 
 export default function Cart() {
   const dispatch = useDispatch()
-  const {items,totalItemsPrise} = useSelector(state=>state.cartSlise)
+  const {items,totalItemsPrise} = useSelector(state=>state.cartSlice)
   const totalCount = items.reduce((count,obj) => {return count+obj.count}, 0)
   const deleteAll = ()=>{
     dispatch(clearCart())
