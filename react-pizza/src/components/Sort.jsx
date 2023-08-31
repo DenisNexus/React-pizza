@@ -20,9 +20,9 @@ export default function Sort({value,onChangeSort}) {
       }
     };
   
-    document.addEventListener("click", handleClickOutside);
+    document.body.addEventListener("click", handleClickOutside);
   
-    return () => {document.removeEventListener("click", handleClickOutside);};
+    return () => {document.body.removeEventListener("click", handleClickOutside)};
   }, []);
 
   return (

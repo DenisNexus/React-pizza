@@ -1,9 +1,11 @@
-import React,{useContext} from 'react'
-import AppContext from '../Context'
+import React from 'react'
 import styles from './Search.module.scss'
+import {useDispatch, useSelector} from 'react-redux'
+import { setIntutValue } from '../../redux/slices/filterSlice'
 
 export default function Search() {
-    const{inputValue,setIntutValue} = useContext(AppContext)
+    const dispatch = useDispatch()
+    const {inputValue} = useSelector(state=>state.filterSlice)
 
         return (
             <div className={styles.root}>
@@ -14,10 +16,10 @@ export default function Search() {
                 <input 
                 className={styles.input}
                 value={inputValue} 
-                onChange={(event)=>setIntutValue(event.target.value)}  
+                onChange={(event)=>dispatch(setIntutValue(event.target.value))}  
                 placeholder='Введи название пиццы' 
                 />
-                {inputValue && <img onClick={()=>setIntutValue("")} className={styles.close} src="../img/close.svg" alt="close" />}
+                {inputValue && <img onClick={()=>dispatch(setIntutValue(""))} className={styles.close} src="../img/close.svg" alt="close" />}
             </div>
         )
 }

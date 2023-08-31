@@ -40,6 +40,8 @@ export const cartSlise = createSlice({
   },
 )
 
+export const selectCart = (state)=>state.cartSlice;
+export const selectCartitems = (id) => state=>state.cartSlice.items.find(obj=>obj.id === id)
 
 export const { addToCart ,removeToCart,clearCart,minusItem } = cartSlise.actions
 
