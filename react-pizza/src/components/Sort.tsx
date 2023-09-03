@@ -1,5 +1,14 @@
 import React,{useState,useRef,useEffect} from 'react'
-export const arr = [
+
+type sortItem ={
+  name:string,
+  sortProperty:string
+}
+type CategoriesProps = {
+  value:any,
+  onChangeSort:any
+}
+export const arr:sortItem[] = [
   {name:"популярности",
   sortProperty:"rating"},
    {name:"цене",
@@ -8,13 +17,13 @@ export const arr = [
     sortProperty:"name"}]
 
 
-export default function Sort({value,onChangeSort}) {
+const Sort:React.FC<CategoriesProps> = ({value,onChangeSort}) => {
 
   const [open, setOpen] = useState(false);
-  const sortRef = useRef();
+  const sortRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event:any) => {
       if (sortRef.current && !sortRef.current.contains(event.target)) {
         setOpen(false);
       }
@@ -54,3 +63,5 @@ export default function Sort({value,onChangeSort}) {
 
   )
 }
+
+export default Sort;

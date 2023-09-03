@@ -1,11 +1,11 @@
 import React from 'react'
 import styles from './Search.module.scss'
 import {useDispatch, useSelector} from 'react-redux'
-import { setIntutValue } from '../../redux/slices/filterSlice'
+import { setIntutValue,selectSort } from '../../redux/slices/filterSlice'
 
 export default function Search() {
     const dispatch = useDispatch()
-    const {inputValue} = useSelector(state=>state.filterSlice)
+    const {inputValue} = useSelector(selectSort)
 
         return (
             <div className={styles.root}>

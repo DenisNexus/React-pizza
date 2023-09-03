@@ -6,10 +6,10 @@ import CartEmpty from '../components/CartEmpty'
 import { useSelector, useDispatch } from 'react-redux'
 import {clearCart , selectCart} from '../redux/slices/cartSlice'
 
-export default function Cart() {
+const Cart = () => {
   const dispatch = useDispatch()
   const {items,totalItemsPrise} = useSelector(selectCart)
-  const totalCount = items.reduce((count,obj) => {return count+obj.count}, 0)
+  const totalCount = items.reduce((count:number,obj:any) => {return count+obj.count}, 0)
   const deleteAll = ()=>{
     dispatch(clearCart())
   }
@@ -37,7 +37,7 @@ export default function Cart() {
               </div>
             </div>
             <div className="content__itemss">
-              {items.map((obj)=>obj.count && <PizzasCartBlock key={obj.key} {...obj}/>)}
+              {items.map((obj:any)=>obj.count && <PizzasCartBlock key={obj.key} {...obj}/>)}
             </div>
             <div className="cart__bottom">
               <div className="cart__bottom-details">
@@ -63,3 +63,4 @@ export default function Cart() {
             </div>
   )
 }
+export default Cart

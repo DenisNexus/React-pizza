@@ -6,7 +6,7 @@ import {selectCart} from '../redux/slices/cartSlice';
 
 export default function Header() {
   const {items,totalItemsPrise} = useSelector(selectCart)
-  const totalCount = items.reduce((count,obj) => {return count+obj.count}, 0)
+  const totalCount = items.reduce((count:number,obj:any) => {return count+obj.count}, 0)
   return (
     <div className="header">
       <div className="container">

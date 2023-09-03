@@ -2,7 +2,17 @@ import React from 'react'
 import {useDispatch } from 'react-redux'
 import { addToCart,minusItem,removeToCart } from '../../redux/slices/cartSlice'
 
-export default function PizzasCartBlock ({name,price,imageUrl,sizes,types,count,id,})  {
+type CategoriesProps ={
+  name:string,
+  price:number,
+  imageUrl:string,
+  sizes:number[],
+  types:number[],
+  count:number,
+  id:string
+}
+
+const  PizzasCartBlock:React.FC<CategoriesProps> =  ({name,price,imageUrl,sizes,types,count,id,}) =>  {
   const dispatch = useDispatch()
   const  onClickPlus = () =>{
     dispatch(addToCart({id}))
@@ -58,3 +68,4 @@ export default function PizzasCartBlock ({name,price,imageUrl,sizes,types,count,
     )
   }
 
+export default PizzasCartBlock

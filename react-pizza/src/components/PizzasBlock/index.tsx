@@ -3,8 +3,16 @@ import {useSelector,useDispatch} from 'react-redux'
 import {addToCart,selectCartitems} from "../../redux/slices/cartSlice"
 import { Link } from "react-router-dom";
 
+type CategoriesProps ={
+  name:string,
+  price:number,
+  imageUrl:string,
+  sizes:number[],
+  types:number[],
+  id:string
+}
 
-export default function PizzaBlock({name,price,imageUrl,sizes,types,id}) {
+const PizzaBlock:React.FC<CategoriesProps> = ({name,price,imageUrl,sizes,types,id}) => {
 const cartItem  = useSelector(selectCartitems(id))
 const [activeTypes , setActiveTypes] = useState(0);
 const [activeSizes , setActiveSizes] = useState(0);
@@ -76,3 +84,5 @@ const onClickAdd =  () =>{
 </div> 
   )
 }
+
+export default PizzaBlock

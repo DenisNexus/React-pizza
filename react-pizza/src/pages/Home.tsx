@@ -21,23 +21,25 @@ function Home() {
     const isSearch = useRef(false);
     const isMounted = useRef(false);
 
-    const {inputValue} = useSelector(state=>state.filterSlice)
+    const {inputValue} = useSelector(selectSort)
   
-    const categoryChange = (id)=>{
+    const categoryChange = (id:number)=>{
       dispatch(setCategoryId(id))
     }
 
-    const filteChange = (id)=>{
+    const filteChange = (id:number)=>{
       dispatch(setsortType(id))
     }
 
-    const onChangepage = (id)=>{
+    const onChangepage = (id:number)=>{
       dispatch(setPage(id))
     }
 
     const getPizzas = () =>{
         const category = categoryId>0 ? `category=${categoryId}`:" "
-          dispatch(fetchPizzas({
+          dispatch(
+            //@ts-ignore
+            fetchPizzas({
             category,
             page,
             sortType}))
@@ -77,20 +79,20 @@ function Home() {
       isSearch.current = false
     },[categoryId ,sortType,page])
 
-    let filterPizzas = items.filter(i=>i.name.toLocaleLowerCase().includes(inputValue))
+    let filterPizzas = items.filter((i:any)=>i.name.toLocaleLowerCase().includes(inputValue))
     let skeleton = [...Array(8).keys()].map((_,index)=> <Skeleton key={index}/>);
-    let pizzas = filterPizzas.map((obj)=><PizzaBlock key={obj.id}{...obj}/>);
+    let pizzas = filterPizzas.map((obj:any)=><PizzaBlock key={obj.id}{...obj}/>);
     
     return (
     <>
     <div className="content__top">
         <Catigories
           value={categoryId}
-          onClickCategory={(id)=> categoryChange(id)}
+          onClickCategory={(id:number)=> categoryChange(id)}
         />
         <Sort
           value={sortType}
-          onChangeSort={(id)=> filteChange(id)}
+          onChangeSort={(id:number)=> filteChange(id)}
         />
     </div>
     <h2 className="content__title">Все пиццы</h2>
@@ -103,7 +105,7 @@ function Home() {
           </div>
         :<div className="content__items">{status === "loading" ? skeleton : pizzas}</div>
       }
-    <Pagination onChangepage={(id)=>onChangepage(id)}/>
+    <Pagination onChangepage={(id:number)=>onChangepage(id)}/>
     </div>
     </>
   )
