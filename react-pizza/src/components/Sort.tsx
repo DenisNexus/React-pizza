@@ -5,8 +5,8 @@ type sortItem ={
   sortProperty:string
 }
 type CategoriesProps = {
-  value:any,
-  onChangeSort:any
+  value:{name:string,sortType:string},
+  onChangeSort: ({}) => void
 }
 export const arr:sortItem[] = [
   {name:"популярности",
@@ -14,8 +14,8 @@ export const arr:sortItem[] = [
    {name:"цене",
    sortProperty:"price"},
    {name:"алфавиту",
-    sortProperty:"name"}]
-
+    sortProperty:"name"}
+  ]
 
 const Sort:React.FC<CategoriesProps> = ({value,onChangeSort}) => {
 
@@ -23,8 +23,8 @@ const Sort:React.FC<CategoriesProps> = ({value,onChangeSort}) => {
   const sortRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleClickOutside = (event:any) => {
-      if (sortRef.current && !sortRef.current.contains(event.target)) {
+    const handleClickOutside = (event:MouseEvent) => {
+      if (sortRef.current && !sortRef.current.contains(event.target as Node)) {
         setOpen(false);
       }
     };

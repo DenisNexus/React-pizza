@@ -12,6 +12,16 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setCategoryId,setsortType,setPage,setFiltres,selectSort } from '../redux/slices/filterSlice'
 import {fetchPizzas , selectPizzaData} from '../redux/slices/pizzasSlice'
 
+type Pizzas ={
+  name:string,
+  price:number,
+  imageUrl:string,
+  sizes:number[],
+  types:number[],
+  count:number,
+  id:string
+}
+
 
 function Home() {
     const navigate = useNavigate();
@@ -27,7 +37,7 @@ function Home() {
       dispatch(setCategoryId(id))
     }
 
-    const filteChange = (id:number)=>{
+    const filteChange = (id:{})=>{
       dispatch(setsortType(id))
     }
 
@@ -79,10 +89,10 @@ function Home() {
       isSearch.current = false
     },[categoryId ,sortType,page])
 
-    let filterPizzas = items.filter((i:any)=>i.name.toLocaleLowerCase().includes(inputValue))
+    let filterPizzas = items.filter((i:{name:string})=>i.name.toLocaleLowerCase().includes(inputValue))
     let skeleton = [...Array(8).keys()].map((_,index)=> <Skeleton key={index}/>);
-    let pizzas = filterPizzas.map((obj:any)=><PizzaBlock key={obj.id}{...obj}/>);
-    
+    let pizzas = filterPizzas.map((obj:Pizzas)=><PizzaBlock key={obj.id}{...obj}/>);
+
     return (
     <>
     <div className="content__top">
@@ -92,7 +102,7 @@ function Home() {
         />
         <Sort
           value={sortType}
-          onChangeSort={(id:number)=> filteChange(id)}
+          onChangeSort={(id:{})=> filteChange(id)}
         />
     </div>
     <h2 className="content__title">Все пиццы</h2>

@@ -6,6 +6,16 @@ import CartEmpty from '../components/CartEmpty'
 import { useSelector, useDispatch } from 'react-redux'
 import {clearCart , selectCart} from '../redux/slices/cartSlice'
 
+type Pizzas ={
+  name:string,
+  price:number,
+  imageUrl:string,
+  sizes:number[],
+  types:number[],
+  count:number,
+  id:string
+}
+
 const Cart = () => {
   const dispatch = useDispatch()
   const {items,totalItemsPrise} = useSelector(selectCart)
@@ -37,7 +47,7 @@ const Cart = () => {
               </div>
             </div>
             <div className="content__itemss">
-              {items.map((obj:any)=>obj.count && <PizzasCartBlock key={obj.key} {...obj}/>)}
+              {items.map((obj:Pizzas)=>obj.count && <PizzasCartBlock key={obj.id} {...obj}/>)}
             </div>
             <div className="cart__bottom">
               <div className="cart__bottom-details">
