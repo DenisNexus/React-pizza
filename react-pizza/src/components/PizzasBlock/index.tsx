@@ -1,6 +1,6 @@
 import React,{useState} from "react"
 import {useSelector,useDispatch} from 'react-redux'
-import {addToCart,selectCartitems} from "../../redux/slices/cartSlice"
+import {CartItem, addToCart,selectCartitems} from "../../redux/slices/cartSlice"
 import { Link } from "react-router-dom";
 
 type CategoriesProps ={
@@ -22,13 +22,14 @@ const typesPizza = ["тонкое","традиционное"];
 const addedCount = cartItem? cartItem.count : 0 ;
 
 const onClickAdd =  () =>{
-  const item = {
+  const item:CartItem = {
     id,
     name,
     price,
     imageUrl,
     sizes:sizes[activeSizes],
-    types:typesPizza[activeTypes]
+    types:typesPizza[activeTypes],
+    count:0
   }
   dispatch(addToCart(item))
 }
