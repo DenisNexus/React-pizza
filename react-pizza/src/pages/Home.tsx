@@ -1,4 +1,4 @@
-import React,{useEffect,useRef}  from 'react'
+import {useEffect,useRef}  from 'react'
 import qs from "qs";
 import {useNavigate} from 'react-router-dom'
 
@@ -9,7 +9,7 @@ import Skeleton from '../components/PizzasBlock/Skeleton';
 import Pagination from '../components/Pagination';
 
 import { useSelector} from 'react-redux'
-import { setCategoryId,setsortType,setPage,setFiltres,selectSort,SortTypes } from '../redux/slices/filterSlice'
+import { setCategoryId,setsortType,setPage,setFiltres,selectSort} from '../redux/slices/filterSlice'
 import {fetchPizzas , selectPizzaData , Pizza} from '../redux/slices/pizzasSlice'
 import { useAppDispatch } from '../redux/store';
 
@@ -27,7 +27,7 @@ function Home() {
       dispatch(setCategoryId(id))
     }
 
-    const filteChange = (id:SortTypes)=>{
+    const filteChange = (id: {})=>{
       dispatch(setsortType(id))
     }
 

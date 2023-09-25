@@ -4,6 +4,7 @@ type sortItem ={
   name:string,
   sortProperty:string
 }
+
 type CategoriesProps = {
   value:{name:string,sortType:string},
   onChangeSort: ({}) => void
