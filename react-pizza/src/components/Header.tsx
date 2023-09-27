@@ -2,10 +2,22 @@ import {Link} from "react-router-dom"
 import Search from './Search'
 import {useSelector} from 'react-redux'
 import {selectCart} from '../redux/slices/cartSlice';
+import React,{useEffect,useRef} from "react";
 
 export default function Header() {
   const {items,totalItemsPrise} = useSelector(selectCart)
-  const totalCount = items.reduce((count:number,obj:any) => {return count+obj.count}, 0)
+  const totalCount = items.reduce((count:number,obj:any) => {return count+obj.count}, 0);
+  const isMiunted = useRef(false);
+
+  useEffect(()=>{
+    if(isMiunted.current){
+      const json = JSON.stringify(items);
+      console.log(json);
+      localStorage.setItem("cart",json)
+    }
+    isMiunted.current= true
+  },[items]);
+
   return (
     <div className="header">
       <div className="container">
