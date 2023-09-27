@@ -10,11 +10,11 @@ type CategoriesProps = {
   onChangeSort: ({}) => void
 }
 export const arr:sortItem[] = [
-  {name:"популярности",
+  {name:"популярності",
   sortProperty:"rating"},
-   {name:"цене",
+   {name:"ціні",
    sortProperty:"price"},
-   {name:"алфавиту",
+   {name:"алфавіту",
     sortProperty:"name"}
   ]
 

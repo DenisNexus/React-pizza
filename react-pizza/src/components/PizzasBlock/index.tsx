@@ -17,7 +17,7 @@ const cartItem  = useSelector(selectCartitems(id))
 const [activeTypes , setActiveTypes] = useState(0);
 const [activeSizes , setActiveSizes] = useState(0);
 const dispatch = useDispatch();
-const typesPizza = ["тонкое","традиционное"];
+const typesPizza = ["тонке","традиційне"];
 
 const addedCount = cartItem? cartItem.count : 0 ;
 
@@ -78,7 +78,7 @@ const onClickAdd =  () =>{
                 fill="white"
               />
             </svg>
-            <span onClick={onClickAdd}>Добавить</span>
+            <span onClick={onClickAdd}>Додати</span>
             {addedCount >0 && <i>{addedCount}</i>}
   </div>
 </div>

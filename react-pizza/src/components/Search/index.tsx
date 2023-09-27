@@ -16,7 +16,7 @@ export default function Search() {
                 className={styles.input}
                 value={inputValue} 
                 onChange={(event)=>dispatch(setIntutValue(event.target.value))}  
-                placeholder='Введи название пиццы' 
+                placeholder='Введи назву піци' 
                 />
                 {inputValue && <img onClick={()=>dispatch(setIntutValue(""))} className={styles.close} src="../img/close.svg" alt="close" />}
             </div>

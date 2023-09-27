@@ -12,7 +12,7 @@ const initialState:FilterState  = {
   inputValue:"",
   categoryId: 0,
   sortType:
-          {name:"популярности",
+          {name:"популярності",
           sortProperty:'price'},
   page:1
   }

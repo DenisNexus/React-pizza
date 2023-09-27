@@ -34,7 +34,7 @@ const Cart = () => {
                   <path d="M8.33337 9.16667V14.1667" stroke="#B6B6B6" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"></path>
                   <path d="M11.6666 9.16667V14.1667" stroke="#B6B6B6" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"></path>
                 </svg>
-                <span onClick={deleteAll}>Очистить корзину</span>
+                <span onClick={deleteAll}>Очистити корзину</span>
               </div>
             </div>
             <div className="content__itemss">
@@ -42,18 +42,18 @@ const Cart = () => {
             </div>
             <div className="cart__bottom">
               <div className="cart__bottom-details">
-                <span> Всего пицц: <b>{totalCount} шт.</b> </span>
-                <span> Сумма заказа: <b>{totalItemsPrise} грн</b> </span>
+                <span> Всього піцц: <b>{totalCount} шт.</b> </span>
+                <span> Сума замовлення: <b>{totalItemsPrise} грн</b> </span>
               </div>
               <div className="cart__bottom-buttons">
                 <Link to="/" className="button button--outline button--add go-back-btn">
                   <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M7 13L1 6.93015L6.86175 1" stroke="#D3D3D3" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
                   </svg>
-                  <span>Вернуться назад</span>
+                  <span>Повернутися назад</span>
                 </Link>
                 <div className="button pay-btn">
-                  <span>Оплатить сейчас</span>
+                  <span>Оплатити зараз</span>
                 </div>
               </div>
             </div>

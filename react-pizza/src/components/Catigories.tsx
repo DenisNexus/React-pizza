@@ -5,7 +5,7 @@ type CategoriesProps = {
 }
 
 const Catigories : React.FC<CategoriesProps> = ({value , onClickCategory}) =>{
-const allCatigories = ["Все", " Мясные" ,"Вегетарианская","Гриль" , "Острые" , "Закрытые" ]
+const allCatigories = ["Все", " М'ясні" ,"Вегетаріанська","Гриль" , "Гострі" , "Закриті" ]
 
   return (
     <div className="categories">
